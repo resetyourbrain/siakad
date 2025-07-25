@@ -6,7 +6,7 @@
 		"client_name": "Robert McMahon",
 		"assignedto": [{
 				"assigneeName": "Curtis Saenz",
-				"assigneeImg": "build/images/users/avatar-1.jpg"
+				"assigneeImg": "build/images/users/user-dummy-img.jpg"
 			},{
 				"assigneeName": "John Robles",
 				"assigneeImg": "build/images/users/avatar-3.jpg"

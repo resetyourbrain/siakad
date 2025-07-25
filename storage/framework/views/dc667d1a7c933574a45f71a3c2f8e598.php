@@ -49,7 +49,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="/account-approval">
+                    <a class="nav-link menu-link" href="/grade">
                         <i class=" ri-numbers-line"></i> <span data-key="t-dashboard">Nilai</span>
                     </a>
                 </li>

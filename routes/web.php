@@ -4,6 +4,7 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GradeController;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -42,3 +43,11 @@ Route::get('/dashboard/mahasiswa', [DashboardController::class, 'student'])->mid
 Route::get('/course', [CourseController::class, 'index'])->middleware(['auth', 'session.expired']);
 
 Route::get('/assignment', [AssignmentController::class, 'index'])->middleware(['auth', 'session.expired']);
+Route::post('/assignment/add', [AssignmentController::class, 'store'])->middleware(['auth', 'session.expired']);
+Route::put('/assignment/delete/{id}', [AssignmentController::class, 'destroy'])->middleware(['auth', 'session.expired']);
+Route::put('/assignment/update/{id}', [AssignmentController::class, 'update'])->middleware(['auth', 'session.expired']);
+Route::get('/assignment/collected/{id}', [AssignmentController::class, 'show'])->middleware(['auth', 'session.expired']);
+
+Route::get('/grade', [GradeController::class, 'index'])->middleware(['auth', 'session.expired']);
+
+Route::get('/assignment/upload/{id}', [AssignmentController::class, 'formUpload'])->middleware(['auth', 'session.expired']);

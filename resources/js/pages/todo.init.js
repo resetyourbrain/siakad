@@ -12,7 +12,7 @@ var todoList = [{
     'todo': 'Added Email Templates',
     "assignedto": [{
         "assigneeName": "Curtis Saenz",
-        "assigneeImg": "build/images/users/avatar-1.jpg",
+        "assigneeImg": "build/images/users/user-dummy-img.jpg",
     }, {
         "assigneeName": "John Robles",
         "assigneeImg": "build/images/users/avatar-3.jpg",
@@ -249,7 +249,7 @@ var todoList = [{
     'todo': 'Added Select2',
     "assignedto": [{
         "assigneeName": "Curtis Saenz",
-        "assigneeImg": "build/images/users/avatar-1.jpg",
+        "assigneeImg": "build/images/users/user-dummy-img.jpg",
     }, {
         "assigneeName": "John Robles",
         "assigneeImg": "build/images/users/avatar-3.jpg",

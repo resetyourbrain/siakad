@@ -332,7 +332,7 @@ if (chartScatterImagesColors) {
             type: 'image',
             opacity: 1,
             image: {
-                src: ['build/images/users/avatar-1.jpg', 'build/images/users/avatar-2.jpg'],
+                src: ['build/images/users/user-dummy-img.jpg', 'build/images/users/avatar-2.jpg'],
                 width: 40,
                 height: 40
             }

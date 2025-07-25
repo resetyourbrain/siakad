@@ -78,7 +78,7 @@
 	},
 	{
 		"id": "8",
-		"image_src": "build/images/users/avatar-1.jpg",
+		"image_src": "build/images/users/user-dummy-img.jpg",
 		"name": "Charles Kubik",
 		"company_name": "Syntyce Solutions",
 		"date": "25 Sep, 2021",

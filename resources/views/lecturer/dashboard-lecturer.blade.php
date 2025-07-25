@@ -77,7 +77,7 @@
                                 <div>
                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="183">0</span>
                                     </h4>
-                                    <a href="" class="text-decoration-underline">View Tugas</a>
+                                    <a href="/assignment" class="text-decoration-underline">View Tugas</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
                                     <span class="avatar-title bg-warning-subtle rounded fs-3">

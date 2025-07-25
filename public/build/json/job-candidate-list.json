@@ -10,7 +10,7 @@
         "bookmark": true
     },{
         "id": 2,
-        "userImg": "build/images/users/avatar-1.jpg",
+        "userImg": "build/images/users/user-dummy-img.jpg",
         "candidateName": "Nicholas Ball",
         "designation": "Assistant / Store Keeper",
         "location": "San Lorenzo",
@@ -167,7 +167,7 @@
         "bookmark": false
     },{
         "id": 19,
-        "userImg": "build/images/users/avatar-1.jpg",
+        "userImg": "build/images/users/user-dummy-img.jpg",
         "candidateName": "Jaylee Ward",
         "designation": "Education Training",
         "location": "Cullera, Spain",

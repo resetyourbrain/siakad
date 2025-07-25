@@ -14,11 +14,22 @@
         <div class="card">
             <div class="card-header d-flex align-items-center">
                 <h5 class="card-title mb-0 flex-grow-1">Data Tugas</h5>
-                <div>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="create-btn" data-bs-target="#exampleModalAdd"><i class="ri-add-line align-bottom me-1"></i> Tambah Tugas</button>
-                </div>
+                @auth
+                    @if (auth()->user()->role === 'dosen')
+                        <div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="create-btn" data-bs-target="#exampleModalAdd">
+                                <i class="ri-add-line align-bottom me-1"></i> Tambah Tugas
+                            </button>
+                        </div>
+                    @endif
+                @endauth
             </div>
             <div class="card-body">
+            @if(session()->has('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
                 <table id="model-datatables" class="table table-bordered nowrap table-striped align-middle" style="width:100%">
                     <thead>
                         <tr>
@@ -28,6 +39,7 @@
                             <th>Deskripsi</th>
                             <th>Tanggal Tugas</th>
                             <th>Tanggal Deadline</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -48,22 +60,56 @@
                             <td>{{ date('d F Y', strtotime($assignment->tanggal_dibuat)) }}</td>
                             <td>{{ date('d F Y', strtotime($assignment->tanggal_deadline)) }}</td>
                             <td>
+                                @if($assignment->is_active)
+                                    <span class="badge bg-success">Aktif</span>
+                                @else
+                                    <span class="badge bg-danger">Tidak Aktif</span>
+                                @endif
+                            </td>
+                            <td>
                                 <div class="dropdown d-inline-block">
                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="ri-more-fill align-middle"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a href="#!" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
-                                                <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View
-                                            </a>
-                                        </li>
-                                        {{-- <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
-                                        <li>
-                                            <a class="dropdown-item remove-item-btn">
-                                                <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
-                                            </a>
-                                        </li> --}}
+                                    @auth
+                                        @if (auth()->user()->role === 'dosen')
+                                            <li>
+                                                <a href="/assignment/collected/{{ $assignment->id }}" class="dropdown-item">
+                                                    <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <button class="dropdown-item edit-item-btn"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModalEdit"
+                                                        data-id="{{ $assignment->id }}"
+                                                        data-course_id="{{ $assignment->course_id }}"
+                                                        data-title="{{ $assignment->title }}"
+                                                        data-description="{{ $assignment->description }}"
+                                                        data-tanggal_deadline="{{ $assignment->tanggal_deadline }}"
+                                                        data-course_name="{{ $assignment->course->nama }}"
+                                                        data-is_active="{{ $assignment->is_active }}">
+                                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <form action="/assignment/delete/{{ $assignment->id }}" method="POST" class="d-inline">
+                                                    @method('put')
+                                                    @csrf
+                                                    <button class="dropdown-item remove-item-btn" onclick="return confirm('Yakin akan menghapus tugas ini ?')">
+                                                        <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        @else
+                                            <li>
+                                                <a href="/assignment/upload/{{ $assignment->id }}" class="dropdown-item">
+                                                    <i class="ri-upload-2-fill align-bottom me-2 text-muted"></i> Upload
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endauth
                                     </ul>
                                 </div>
                             </td>
@@ -101,13 +147,27 @@
                 <h5 class="modal-title" id="exampleModalLabel">Form Tambah Tugas</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
-            <form class="tablelist-form" autocomplete="off" action="/pic/add" method="POST">
+            <form class="tablelist-form" autocomplete="off" action="/assignment/add" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="name-field" class="form-label">Name<span class="text-danger">*</span></label>
-                        <input type="text" id="name-field" name="name" class="form-control @error('name') is-invalid @enderror" required placeholder="PIC Name" value="{{ old('name') }}"/>
-                        @error('name')
+                        <label class="form-label">Mata Kuliah<span class="text-danger">*</span></label>
+                            <select class="form-select select2" name="course_id" id="course_id" required autofocus>
+                                    <option value="">-Pilih Mata Kuliah-</option>
+                                    @foreach ($courses as $course)
+                                        @if(old('course_id') == $course->id)
+                                            <option value="{{ $course->id }}" selected>{{ $course->nama }}</option>
+                                        @else
+                                            <option value="{{ $course->id }}">{{ $course->nama }}</option>
+                                        @endif
+                                    @endforeach
+                            </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="title-field" class="form-label">Judul Tugas<span class="text-danger">*</span></label>
+                        <input type="text" id="title-field" name="title" class="form-control @error('title') is-invalid @enderror" required placeholder="Judul Tugas" value="{{ old('title') }}"/>
+                        @error('title')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -115,47 +175,15 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="email-field" class="form-label">Email<span class="text-danger">*</span></label>
-                        <input type="email" id="email-field" name="email" class="form-control @error('email') is-invalid @enderror" required placeholder="Email" value="{{ old('email') }}"/>
-                        @error('email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
+                        <label for="description" class="form-label">Deskripsi Tugas<span class="text-danger">*</span></label>
+                        <textarea class="form-control required" required id="description" name="description" placeholder="Deskripsi Tugas" rows="3">{{ old('description') }}</textarea>
+                        <div class="invalid-feedback">Deskripsi is required.</div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="password-input">Password</label>
-                        <div class="position-relative auth-pass-inputgroup">
-                            <input type="password" class="form-control pe-5 password-input" onpaste="return false" placeholder="Enter password" id="password-input" name="password" aria-describedby="passwordInput" pattern=".{6,}" required>
-                            <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                        </div>
-                        <div id="passwordInput" class="form-text">Must be at least 6 characters.</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="confirm-password-input">Confirm Password</label>
-                        <div class="position-relative auth-pass-inputgroup mb-3">
-                            <input type="password" class="form-control pe-5 password-input" onpaste="return false" placeholder="Confirm password" pattern=".{6,}" id="confirm-password-input" name="password_confirmation" required>
-                            <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="confirm-password-input"><i class="ri-eye-fill align-middle"></i></button>
-                        </div>
-                    </div>
-
-                    <div class="invalid-feedback d-none" id="password-match-error">
-                        Password and Confirm Password do not match!
-                    </div>
-
-                    <div id="password-contain" class="p-3 bg-light mb-2 rounded">
-                        <h5 class="fs-13">Password must contain:</h5>
-                        <p id="pass-length" class="invalid fs-12 mb-2">Minimum <b>6 characters</b></p>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="phone-field" class="form-label">Phone<span class="text-danger">*</span></label>
-                        <input type="text" id="phone-field" name="phone" class="form-control @error('phone') is-invalid @enderror" 
-                            required placeholder="Phone Number" value="{{ old('phone') }}"
-                            pattern="[+0-9]*" title="Phone number can only contain numbers and a plus sign." />
-                        @error('phone')
+                        <label class="form-label">Tanggal Deadline<span class="text-danger">*</span></label>
+                        <input type="date" class="form-control @error('tanggal_deadline') is-invalid @enderror" name="tanggal_deadline" required placeholder="Tanggal Service Berikutnya" value="{{ old('tanggal_deadline') }}"/>
+                        @error('tanggal_deadline')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -174,9 +202,115 @@
     </div>
 </div>
 
+<div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel">Form Edit Tugas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            {{-- <form class="tablelist-form" autocomplete="off" action="assignment/update/{id}" method="POST"> --}}
+            <form id="form-edit-assignment" class="tablelist-form" autocomplete="off" method="POST">
+                @method('put')
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title-field" class="form-label">Mata Kuliah<span class="text-danger">*</span></label>
+                        <input type="hidden" name="course_id" id="edit-course_id" value="{{ old('course_id', $assignment->course_id) }}">
+                        <input type="text" id="edit-course_name" name="course_name" class="form-control" disabled value="">
+                        @error('course_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="title-field" class="form-label">Judul Tugas<span class="text-danger">*</span></label>
+                        <input type="text" id="edit-title-field" name="title" class="form-control @error('title') is-invalid @enderror" required placeholder="Judul Tugas" value="{{ old('title', $assignment->title) }}"/>
+                        @error('title')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Deskripsi Tugas<span class="text-danger">*</span></label>
+                        <textarea class="form-control required" required id="edit-description" name="description" placeholder="Deskripsi Tugas" rows="3">{{ old('description', $assignment->description) }}</textarea>
+                        <div class="invalid-feedback">Deskripsi is required.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal Deadline<span class="text-danger">*</span></label>
+                        <input type="date" class="form-control @error('tanggal_deadline') is-invalid @enderror" id="edit-tanggal-deadline" name="tanggal_deadline" required placeholder="Tanggal Deadline" value="{{ old('tanggal_deadline', \Carbon\Carbon::parse($assignment->tanggal_deadline)->format('Y-m-d')) }}"/>
+                        @error('tanggal_deadline')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Status <span class="text-danger">*</span></label>
+                        <select class="form-control @error('is_active') is-invalid @enderror" id="edit-is_active" name="is_active" required>
+                            <option value="1" {{ old('is_active', $assignment->is_active) == 1 ? 'selected' : '' }}>Aktif</option>
+                            <option value="0" {{ old('is_active', $assignment->is_active) == 0 ? 'selected' : '' }}>Tidak Aktif</option>
+                        </select>
+                        @error('is_active')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" id="add-btn">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 @section('script')
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const editButtons = document.querySelectorAll('.edit-item-btn');
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const title = this.getAttribute('data-title');
+            const description = this.getAttribute('data-description');
+            const deadline = this.getAttribute('data-tanggal_deadline');
+            const formatted = new Date(deadline).toISOString().slice(0, 10);
+            const courseId = this.getAttribute("data-course_id");
+            const courseName = this.getAttribute("data-course_name");
+            const isActive = this.getAttribute("data-is_active");
+
+
+            document.querySelector('#edit-title-field').value = title;
+            document.querySelector('#edit-description').value = description;
+            document.querySelector('#edit-tanggal-deadline').value = deadline;
+            document.getElementById('edit-tanggal-deadline').value = formatted;
+            document.querySelector("#edit-course_id").value = courseId;
+            document.querySelector("#edit-course_name").value = courseName;
+            document.querySelector('#edit-is_active').value = isActive;
+
+            const form = document.querySelector('#form-edit-assignment');
+            form.action = `/assignment/update/${id}`;
+        });
+    });
+});
+</script>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
