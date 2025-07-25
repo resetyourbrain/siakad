@@ -13,21 +13,41 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Buttons with dropdowns</h4>
-                <div class="flex-shrink-0">
-                </div>
+                <h4 class="card-title mb-0 flex-grow-1">{{ $assignment->title }}</h4>
+                {{-- <div class="flex-shrink-0">
+                    <a href="{{ url('/assignment') }}" class="btn btn-primary btn-sm">
+                        <i class="ri-arrow-left-line align-bottom"></i> Kembali
+                    </a>
+                </div> --}}
             </div><!-- end card header -->
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="title-field" class="form-label">Upload Tugas<span class="text-danger">*</span></label>
-                    <input type="text" id="title-field" name="title" class="form-control @error('title') is-invalid @enderror" required placeholder="Judul Tugas" value="{{ old('title') }}"/>
-                    @error('title')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+            <form class="tablelist-form" autocomplete="off" action="/assignment/add" method="POST">
+                @csrf
+                <div class="card-body">
+                    <p><strong>Deskripsi :</strong> {{ $assignment->description }}</p>
+                    <div class="mb-3">
+                        <label for="title-field" class="form-label">Upload Tugas<span class="text-danger">*</span></label>
+                        <input type="file" id="title-field" name="title" class="form-control @error('title') is-invalid @enderror" required placeholder="Judul Tugas" value="{{ old('title') }}"/>
+                        @error('title')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="note" class="form-label">Keterangan</label>
+                        <textarea class="form-control required" id="note" name="note" placeholder="Keterangan Tugas" rows="3">{{ old('note') }}</textarea>
+                    </div>
+
                 </div>
-            </div>
+                <div class="card-footer">
+                    <div class="hstack gap-2 justify-content-start">
+                        {{-- <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button> --}}
+                        <a href="{{ url('/assignment') }}" class="btn btn-light">Kembali</a>
+                        <button type="submit" class="btn btn-success" id="add-btn">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <!--end col-->

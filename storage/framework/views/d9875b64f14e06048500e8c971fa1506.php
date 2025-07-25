@@ -12,14 +12,16 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Buttons with dropdowns</h4>
-                <div class="flex-shrink-0">
-                </div>
+                <h4 class="card-title mb-0 flex-grow-1"><?php echo e($assignment->title); ?></h4>
+                
             </div><!-- end card header -->
-            <div class="card-body">
-                <div class="mb-3">
-                    <label for="title-field" class="form-label">Upload Tugas<span class="text-danger">*</span></label>
-                    <input type="text" id="title-field" name="title" class="form-control <?php $__errorArgs = ['title'];
+            <form class="tablelist-form" autocomplete="off" action="/assignment/add" method="POST">
+                <?php echo csrf_field(); ?>
+                <div class="card-body">
+                    <p><strong>Deskripsi :</strong> <?php echo e($assignment->description); ?></p>
+                    <div class="mb-3">
+                        <label for="title-field" class="form-label">Upload Tugas<span class="text-danger">*</span></label>
+                        <input type="file" id="title-field" name="title" class="form-control <?php $__errorArgs = ['title'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -27,21 +29,35 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" required placeholder="Judul Tugas" value="<?php echo e(old('title')); ?>"/>
-                    <?php $__errorArgs = ['title'];
+                        <?php $__errorArgs = ['title'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                        <div class="invalid-feedback">
-                            <?php echo e($message); ?>
+                            <div class="invalid-feedback">
+                                <?php echo e($message); ?>
 
-                        </div>
-                    <?php unset($message);
+                            </div>
+                        <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="note" class="form-label">Keterangan</label>
+                        <textarea class="form-control required" id="note" name="note" placeholder="Keterangan Tugas" rows="3"><?php echo e(old('note')); ?></textarea>
+                    </div>
+
                 </div>
-            </div>
+                <div class="card-footer">
+                    <div class="hstack gap-2 justify-content-start">
+                        
+                        <a href="<?php echo e(url('/assignment')); ?>" class="btn btn-light">Kembali</a>
+                        <button type="submit" class="btn btn-success" id="add-btn">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <!--end col-->
