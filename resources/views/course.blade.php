@@ -55,12 +55,6 @@
                                                 <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View
                                             </a>
                                         </li>
-                                        {{-- <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
-                                        <li>
-                                            <a class="dropdown-item remove-item-btn">
-                                                <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
-                                            </a>
-                                        </li> --}}
                                     </ul>
                                 </div>
                             </td>
@@ -74,7 +68,6 @@
 <!--end row-->
 
 <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-{{-- <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle{{ $course->id }}" aria-hidden="true"> --}}
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -117,7 +110,7 @@ document.querySelectorAll('.btn-view-student').forEach(button => {
     button.addEventListener('click', () => {
         const students = JSON.parse(button.getAttribute('data-students'));
         const tbody = document.getElementById('student-table-body');
-        tbody.innerHTML = ''; // kosongkan dulu
+        tbody.innerHTML = ''; 
 
         students.forEach((studentCourse, index) => {
             tbody.innerHTML += `

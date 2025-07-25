@@ -219,7 +219,6 @@
                 <h5 class="modal-title" id="exampleModalLabel">Form Edit Tugas</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
-            {{-- <form class="tablelist-form" autocomplete="off" action="assignment/update/{id}" method="POST"> --}}
             <form id="form-edit-assignment" class="tablelist-form" autocomplete="off" method="POST">
                 @method('put')
                 @csrf

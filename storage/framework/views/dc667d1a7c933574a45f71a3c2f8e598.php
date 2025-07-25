@@ -54,6 +54,11 @@
                     <?php endif; ?>
                 <?php endif; ?>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="/material">
+                        <i class=" ri-file-list-3-line"></i> <span data-key="t-dashboard">Materi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="/assignment">
                         <i class=" ri-task-line"></i> <span data-key="t-dashboard">Tugas</span>
                     </a>

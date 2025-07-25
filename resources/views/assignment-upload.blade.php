@@ -14,11 +14,6 @@
         <div class="card">
             <div class="card-header align-items-center d-flex">
                 <h4 class="card-title mb-0 flex-grow-1">{{ $assignment->title }}</h4>
-                {{-- <div class="flex-shrink-0">
-                    <a href="{{ url('/assignment') }}" class="btn btn-primary btn-sm">
-                        <i class="ri-arrow-left-line align-bottom"></i> Kembali
-                    </a>
-                </div> --}}
             </div><!-- end card header -->
             <form class="tablelist-form" autocomplete="off" enctype="multipart/form-data" action="/submission/add" method="POST">
                 @csrf
@@ -27,7 +22,7 @@
                     <div class="mb-3">
                         <label for="file-field" class="form-label">Upload Tugas<span class="text-danger">*</span></label>
                         <input type="hidden" name="assignment_id" id="edit-assignment_id" value="{{ old('assignment_id', $assignment->id) }}">
-                        <input type="file" id="file-field" name="file" class="form-control @error('file') is-invalid @enderror" required placeholder="Judul Tugas" value="{{ old('file') }}"/>
+                        <input type="file" id="file-field" name="file" class="form-control @error('file') is-invalid @enderror" required placeholder="File Tugas" value="{{ old('file') }}"/>
                         @error('file')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -43,7 +38,6 @@
                 </div>
                 <div class="card-footer">
                     <div class="hstack gap-2 justify-content-start">
-                        {{-- <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button> --}}
                         <a href="{{ url('/assignment') }}" class="btn btn-light">Kembali</a>
                         <button type="submit" class="btn btn-success" id="add-btn">Submit</button>
                     </div>

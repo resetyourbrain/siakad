@@ -56,7 +56,7 @@ php artisan migrate:fresh --seed
 ######   Password: mahasiswa1
 
 ### 🛠 Teknologi yang Digunakan
-######   Laravel
+######   Laravel 10
 ######   Bootstrap
 ######   MySQL/MariaDB
 ######   Blade (Laravel View Engine)

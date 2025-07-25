@@ -20,4 +20,9 @@ class Lecturer extends Model
     {
         return $this->hasMany(Course::class);
     }
+
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
 }
