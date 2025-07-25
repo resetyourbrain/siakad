@@ -17,7 +17,7 @@ cd siakad
 cp .env.example .env
 ```
 
-### 3. Sesuaikan Konfigurasi Database
+### 3. Buat Database dan Sesuaikan Konfigurasi
 
 ```bash
 Edit file .env dan sesuaikan dengan pengaturan database lokal Anda:
