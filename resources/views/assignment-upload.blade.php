@@ -20,14 +20,15 @@
                     </a>
                 </div> --}}
             </div><!-- end card header -->
-            <form class="tablelist-form" autocomplete="off" action="/assignment/add" method="POST">
+            <form class="tablelist-form" autocomplete="off" enctype="multipart/form-data" action="/submission/add" method="POST">
                 @csrf
                 <div class="card-body">
                     <p><strong>Deskripsi :</strong> {{ $assignment->description }}</p>
                     <div class="mb-3">
-                        <label for="title-field" class="form-label">Upload Tugas<span class="text-danger">*</span></label>
-                        <input type="file" id="title-field" name="title" class="form-control @error('title') is-invalid @enderror" required placeholder="Judul Tugas" value="{{ old('title') }}"/>
-                        @error('title')
+                        <label for="file-field" class="form-label">Upload Tugas<span class="text-danger">*</span></label>
+                        <input type="hidden" name="assignment_id" id="edit-assignment_id" value="{{ old('assignment_id', $assignment->id) }}">
+                        <input type="file" id="file-field" name="file" class="form-control @error('file') is-invalid @enderror" required placeholder="Judul Tugas" value="{{ old('file') }}"/>
+                        @error('file')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

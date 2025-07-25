@@ -104,10 +104,20 @@
                                                 </form>
                                             </li>
                                         <?php else: ?>
+                                            <?php
+                                                $studentId = auth()->user()->student->id;
+                                                $submission = $assignment->submissions->where('student_id', $studentId)->first();
+                                            ?>
                                             <li>
-                                                <a href="/assignment/upload/<?php echo e($assignment->id); ?>" class="dropdown-item">
-                                                    <i class="ri-upload-2-fill align-bottom me-2 text-muted"></i> Upload
-                                                </a>
+                                                <?php if($submission): ?>
+                                                    <a href="<?php echo e(asset('storage/' . $submission->file_path)); ?>" class="dropdown-item" target="_blank">
+                                                        <i class="ri-eye-fill align-bottom me-2 text-muted"></i> Tugas Sudah Dikirim
+                                                    </a>
+                                                <?php else: ?>
+                                                    <a href="/assignment/upload/<?php echo e($assignment->id); ?>" class="dropdown-item">
+                                                        <i class="ri-upload-2-fill align-bottom me-2 text-muted"></i> Upload
+                                                    </a>
+                                                <?php endif; ?>
                                             </li>
                                         <?php endif; ?>
                                     <?php endif; ?>

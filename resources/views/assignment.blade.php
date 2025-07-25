@@ -103,10 +103,20 @@
                                                 </form>
                                             </li>
                                         @else
+                                            @php
+                                                $studentId = auth()->user()->student->id;
+                                                $submission = $assignment->submissions->where('student_id', $studentId)->first();
+                                            @endphp
                                             <li>
-                                                <a href="/assignment/upload/{{ $assignment->id }}" class="dropdown-item">
-                                                    <i class="ri-upload-2-fill align-bottom me-2 text-muted"></i> Upload
-                                                </a>
+                                                @if ($submission)
+                                                    <a href="{{ asset('storage/' . $submission->file_path) }}" class="dropdown-item" target="_blank">
+                                                        <i class="ri-eye-fill align-bottom me-2 text-muted"></i> Tugas Sudah Dikirim
+                                                    </a>
+                                                @else
+                                                    <a href="/assignment/upload/{{ $assignment->id }}" class="dropdown-item">
+                                                        <i class="ri-upload-2-fill align-bottom me-2 text-muted"></i> Upload
+                                                    </a>
+                                                @endif
                                             </li>
                                         @endif
                                     @endauth

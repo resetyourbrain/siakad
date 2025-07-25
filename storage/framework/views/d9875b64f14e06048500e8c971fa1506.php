@@ -15,21 +15,22 @@
                 <h4 class="card-title mb-0 flex-grow-1"><?php echo e($assignment->title); ?></h4>
                 
             </div><!-- end card header -->
-            <form class="tablelist-form" autocomplete="off" action="/assignment/add" method="POST">
+            <form class="tablelist-form" autocomplete="off" enctype="multipart/form-data" action="/submission/add" method="POST">
                 <?php echo csrf_field(); ?>
                 <div class="card-body">
                     <p><strong>Deskripsi :</strong> <?php echo e($assignment->description); ?></p>
                     <div class="mb-3">
-                        <label for="title-field" class="form-label">Upload Tugas<span class="text-danger">*</span></label>
-                        <input type="file" id="title-field" name="title" class="form-control <?php $__errorArgs = ['title'];
+                        <label for="file-field" class="form-label">Upload Tugas<span class="text-danger">*</span></label>
+                        <input type="hidden" name="assignment_id" id="edit-assignment_id" value="<?php echo e(old('assignment_id', $assignment->id)); ?>">
+                        <input type="file" id="file-field" name="file" class="form-control <?php $__errorArgs = ['file'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" required placeholder="Judul Tugas" value="<?php echo e(old('title')); ?>"/>
-                        <?php $__errorArgs = ['title'];
+unset($__errorArgs, $__bag); ?>" required placeholder="Judul Tugas" value="<?php echo e(old('file')); ?>"/>
+                        <?php $__errorArgs = ['file'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }

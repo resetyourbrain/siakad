@@ -18,6 +18,11 @@
 
                     </a>
                 </h4>
+                <div class="flex-shrink-0">
+                    <a href="<?php echo e(url('/assignment')); ?>" class="btn btn-primary btn-sm">
+                        <i class="ri-arrow-left-line align-bottom"></i> Kembali
+                    </a>
+                </div>
             </div><!-- end card header -->
 
             <div class="card-body">

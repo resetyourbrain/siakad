@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\SubmissionController;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -52,3 +53,5 @@ Route::get('/assignment/collected/{id}', [AssignmentController::class, 'show'])-
 Route::get('/grade', [GradeController::class, 'index'])->middleware(['auth', 'session.expired']);
 
 Route::get('/assignment/upload/{id}', [AssignmentController::class, 'formUpload'])->middleware(['auth', 'session.expired']);
+
+Route::post('/submission/add', [SubmissionController::class, 'store'])->middleware(['auth', 'session.expired']);
