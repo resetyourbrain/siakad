@@ -26,7 +26,7 @@
                                 <div>
                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="5">0</span>
                                     </h4>
-                                    <a href="/course" class="text-decoration-underline">View Mata Kuliah</a>
+                                    <a href="/course-student" class="text-decoration-underline">View Mata Kuliah</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
                                     <span class="avatar-title bg-success-subtle rounded fs-3">
@@ -51,7 +51,7 @@
                                 <div>
                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="2">0</span>
                                     </h4>
-                                    <a href="" class="text-decoration-underline">View Tugas</a>
+                                    <a href="/assignment" class="text-decoration-underline">View Tugas</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
                                     <span class="avatar-title bg-warning-subtle rounded fs-3">

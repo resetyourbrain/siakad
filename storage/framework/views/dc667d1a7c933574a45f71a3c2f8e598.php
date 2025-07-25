@@ -38,11 +38,21 @@
                         <i class=" ri-dashboard-2-line"></i> <span data-key="t-dashboard">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="/course">
-                        <i class=" ri-book-2-line"></i> <span data-key="t-dashboard">Mata Kuliah</span>
-                    </a>
-                </li>
+                <?php if(auth()->guard()->check()): ?>
+                    <?php if(auth()->user()->role === 'dosen'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="/course">
+                            <i class=" ri-book-2-line"></i> <span data-key="t-dashboard">Mata Kuliah</span>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="/course-student">
+                            <i class=" ri-book-2-line"></i> <span data-key="t-dashboard">Mata Kuliah</span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/assignment">
                         <i class=" ri-task-line"></i> <span data-key="t-dashboard">Tugas</span>

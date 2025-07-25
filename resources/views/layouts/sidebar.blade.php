@@ -67,11 +67,21 @@
                         <i class=" ri-dashboard-2-line"></i> <span data-key="t-dashboard">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="/course">
-                        <i class=" ri-book-2-line"></i> <span data-key="t-dashboard">Mata Kuliah</span>
-                    </a>
-                </li>
+                @auth
+                    @if (auth()->user()->role === 'dosen')
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="/course">
+                            <i class=" ri-book-2-line"></i> <span data-key="t-dashboard">Mata Kuliah</span>
+                        </a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="/course-student">
+                            <i class=" ri-book-2-line"></i> <span data-key="t-dashboard">Mata Kuliah</span>
+                        </a>
+                    </li>
+                    @endif
+                @endauth
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="/assignment">
                         <i class=" ri-task-line"></i> <span data-key="t-dashboard">Tugas</span>

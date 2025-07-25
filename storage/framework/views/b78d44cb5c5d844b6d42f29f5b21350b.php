@@ -12,49 +12,29 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Data Nilai Mahasiswa</h5>
+                <h5 class="card-title mb-0">Data Mata Kuliah</h5>
             </div>
             <div class="card-body">
                 <table id="model-datatables" class="table table-bordered nowrap table-striped align-middle" style="width:100%">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Nama Mahasiswa</th>
+                            <th>Kode Kelas</th>
                             <th>Nama Matkul</th>
-                            <th>Nilai</th>
-                            <?php if(auth()->guard()->check()): ?>
-                                <?php if(auth()->user()->role === 'dosen'): ?>
-                                <th>Action</th>
-                                <?php endif; ?>
-                            <?php endif; ?>
+                            <th>SKS</th>
+                            <th>Semester</th>
+                            <th>Dosen</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $__currentLoopData = $grades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $grade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td><?php echo e($loop->iteration); ?></td>
-                            <td><?php echo e($grade->studentCourse?->student?->user?->name ?? '-'); ?></td>
-                            <td><?php echo e($grade->studentCourse?->course?->nama ?? '-'); ?></td>
-                            <td><?php echo e($grade->nilai); ?></td>
-                            <?php if(auth()->guard()->check()): ?>
-                                <?php if(auth()->user()->role === 'dosen'): ?>
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <a href="#!" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
-                                                    <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View
-                                                </a>
-                                            </li>
-                                            
-                                        </ul>
-                                    </div>
-                                </td>
-                                <?php endif; ?>
-                            <?php endif; ?>
+                            <td><?php echo e($course->course->kode); ?></td>
+                            <td><?php echo e($course->course->nama); ?></td>
+                            <td><?php echo e($course->course->sks); ?></td>
+                            <td><?php echo e($course->course->semester); ?></td>
+                            <td><?php echo e($course->course->lecturer->user->name ?? '-'); ?></td>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
@@ -89,4 +69,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/reset/LEARN/sistem-akademik/resources/views/grade.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home/reset/LEARN/sistem-akademik/resources/views/course-student.blade.php ENDPATH**/ ?>

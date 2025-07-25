@@ -41,6 +41,7 @@ Route::get('/dashboard/dosen', [DashboardController::class, 'lecturer'])->middle
 Route::get('/dashboard/mahasiswa', [DashboardController::class, 'student'])->middleware(['auth', 'session.expired']);
 
 Route::get('/course', [CourseController::class, 'index'])->middleware(['auth', 'session.expired']);
+Route::get('/course-student', [CourseController::class, 'indexStudent'])->middleware(['auth', 'session.expired']);
 
 Route::get('/assignment', [AssignmentController::class, 'index'])->middleware(['auth', 'session.expired']);
 Route::post('/assignment/add', [AssignmentController::class, 'store'])->middleware(['auth', 'session.expired']);

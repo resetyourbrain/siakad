@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,6 +20,17 @@ class CourseController extends Controller
         return view('course', [
             'courses' => $courses
         ]);
+    }
+
+    public function indexStudent()
+    {
+        $user = Auth::user();
+        $student = Student::where('user_id', $user->id)->first();
+        $courses = $student->studentCourses()
+            ->with(['course.lecturer.user'])
+            ->get();
+        // dd($courses);
+        return view('course-student', compact('courses'));
     }
 
     /** 

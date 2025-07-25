@@ -13,54 +13,29 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Data Nilai Mahasiswa</h5>
+                <h5 class="card-title mb-0">Data Mata Kuliah</h5>
             </div>
             <div class="card-body">
                 <table id="model-datatables" class="table table-bordered nowrap table-striped align-middle" style="width:100%">
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Nama Mahasiswa</th>
+                            <th>Kode Kelas</th>
                             <th>Nama Matkul</th>
-                            <th>Nilai</th>
-                            @auth
-                                @if (auth()->user()->role === 'dosen')
-                                <th>Action</th>
-                                @endif
-                            @endauth
+                            <th>SKS</th>
+                            <th>Semester</th>
+                            <th>Dosen</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($grades as $grade)
+                        @foreach ($courses as $course)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $grade->studentCourse?->student?->user?->name ?? '-' }}</td>
-                            <td>{{ $grade->studentCourse?->course?->nama ?? '-' }}</td>
-                            <td>{{ $grade->nilai }}</td>
-                            @auth
-                                @if (auth()->user()->role === 'dosen')
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <a href="#!" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
-                                                    <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View
-                                                </a>
-                                            </li>
-                                            {{-- <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
-                                                </a>
-                                            </li> --}}
-                                        </ul>
-                                    </div>
-                                </td>
-                                @endif
-                            @endauth
+                            <td>{{ $course->course->kode }}</td>
+                            <td>{{ $course->course->nama }}</td>
+                            <td>{{ $course->course->sks }}</td>
+                            <td>{{ $course->course->semester }}</td>
+                            <td>{{ $course->course->lecturer->user->name ?? '-' }}</td>
                         @endforeach
                     </tbody>
                 </table>
