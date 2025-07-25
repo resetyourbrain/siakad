@@ -61,4 +61,5 @@ php artisan migrate:fresh --seed
 ######   MySQL/MariaDB
 ######   Blade (Laravel View Engine)
 
-Fitur dan dashboard untuk pengguna 'Admin' belum tersedia. Oleh karena itu, pengelolaan data Dosen, Mahasiswa, dan Mata Kuliah untuk sementara dilakukan melalui seeder.
+
+Fitur dan dashboard untuk user 'Admin' belum tersedia. Oleh karena itu, pengelolaan data Dosen, Mahasiswa, dan Mata Kuliah untuk sementara dilakukan melalui seeder.
