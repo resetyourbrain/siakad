@@ -47,16 +47,16 @@ php artisan migrate:fresh --seed
 
 ### 🔐 Akun Login Dummy
 
-Akun Dosen
-    Username: dosen1
-    Password: dosen1
+#### Akun Dosen
+#####   Username: dosen1
+#####   Password: dosen1
 
-Akun Mahasiswa
-    Username: mahasiswa1
-    Password: mahasiswa1
+#### Akun Mahasiswa
+#####   Username: mahasiswa1
+#####   Password: mahasiswa1
 
-🛠 Teknologi yang Digunakan
-    Laravel
-    Bootstrap
-    MySQL/MariaDB
-    Blade (Laravel View Engine)
+### 🛠 Teknologi yang Digunakan
+#####   Laravel
+#####   Bootstrap
+#####   MySQL/MariaDB
+#####   Blade (Laravel View Engine)
