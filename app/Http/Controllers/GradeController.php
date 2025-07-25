@@ -54,7 +54,15 @@ class GradeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'nilai' => 'required'
+        ]);
+
+        $grade = Grade::findOrFail($id);
+        $grade->nilai = $request->nilai;
+        $grade->save();
+
+        return redirect('/grade')->with('success', 'Nilai berhasil dirubah.');
     }
 
     /**

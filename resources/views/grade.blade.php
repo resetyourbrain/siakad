@@ -16,6 +16,11 @@
                 <h5 class="card-title mb-0">Data Nilai Mahasiswa</h5>
             </div>
             <div class="card-body">
+            @if(session()->has('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @endif
                 <table id="model-datatables" class="table table-bordered nowrap table-striped align-middle" style="width:100%">
                     <thead>
                         <tr>
@@ -30,39 +35,69 @@
                             @endauth
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($grades as $grade)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $grade->studentCourse?->student?->user?->name ?? '-' }}</td>
-                            <td>{{ $grade->studentCourse?->course?->nama ?? '-' }}</td>
-                            <td>{{ $grade->nilai }}</td>
-                            @auth
-                                @if (auth()->user()->role === 'dosen')
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <a href="#!" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
-                                                    <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View
-                                                </a>
-                                            </li>
-                                            {{-- <li><a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
-                                            <li>
-                                                <a class="dropdown-item remove-item-btn">
-                                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
-                                                </a>
-                                            </li> --}}
-                                        </ul>
+                        <tbody>
+                            @foreach ($grades as $grade)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $grade->studentCourse->student->user->name }}</td>
+                                    <td>{{ $grade->studentCourse->course->nama }}</td>
+                                    <td>{{ $grade->nilai }}</td>
+                                    @auth
+                                        @if (auth()->user()->role === 'dosen')
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="ri-more-fill align-middle"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li>
+                                                        <a href="#modalEditNilai{{ $grade->id }}" class="dropdown-item edit-item-btn" data-bs-toggle="modal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        @endif
+                                    @endauth
+                                </tr>
+
+                                <div class="modal fade" id="modalEditNilai{{ $grade->id }}" tabindex="-1" aria-labelledby="modalEditNilaiLabel{{ $grade->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-light p-3">
+                                                <h5 class="modal-title" id="modalEditNilaiLabel{{ $grade->id }}">Edit Nilai</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                            </div>
+                                            <form action="/grade/update/{{ $grade->id }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label for="nilai-field-{{ $grade->id }}" class="form-label">Nilai <span class="text-danger">*</span></label>
+                                                        <input type="hidden" name="grade_id" id="edit-grade_id" value="{{ old('grade_id', $grade->id) }}">
+                                                        <input type="text" id="nilai-field-{{ $grade->id }}" name="nilai" class="form-control @error('nilai') is-invalid @enderror" required value="{{ old('nilai', $grade->nilai) }}" />
+                                                        @error('nilai')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="hstack gap-2 justify-content-end">
+                                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                </td>
-                                @endif
-                            @endauth
-                        @endforeach
-                    </tbody>
+                                </div>
+
+                            @endforeach
+                        </tbody>
+
                 </table>
             </div>
         </div>

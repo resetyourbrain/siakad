@@ -51,6 +51,7 @@ Route::put('/assignment/update/{id}', [AssignmentController::class, 'update'])->
 Route::get('/assignment/collected/{id}', [AssignmentController::class, 'show'])->middleware(['auth', 'session.expired']);
 
 Route::get('/grade', [GradeController::class, 'index'])->middleware(['auth', 'session.expired']);
+Route::put('/grade/update/{id}', [GradeController::class, 'update'])->middleware(['auth', 'session.expired']);
 
 Route::get('/assignment/upload/{id}', [AssignmentController::class, 'formUpload'])->middleware(['auth', 'session.expired']);
 
