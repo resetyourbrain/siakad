@@ -250,7 +250,6 @@ unset($__errorArgs, $__bag); ?>
                 <h5 class="modal-title" id="exampleModalLabel">Form Edit Tugas</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
-            
             <form id="form-edit-assignment" class="tablelist-form" autocomplete="off" method="POST">
                 <?php echo method_field('put'); ?>
                 <?php echo csrf_field(); ?>

@@ -57,6 +57,7 @@ php artisan migrate:fresh --seed
 
 ### 🛠 Teknologi yang Digunakan
 ######   Laravel 10
+######   PHP 8.1
 ######   Bootstrap
 ######   MySQL/MariaDB
 ######   Blade (Laravel View Engine)
