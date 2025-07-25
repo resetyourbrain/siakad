@@ -9,50 +9,54 @@ Ikuti langkah-langkah berikut untuk menjalankan project ini di komputer lokal An
 ```bash
 git clone https://github.com/username/siakad.git
 cd siakad
+```
 
-2. Salin File Environment
+### 2. Salin File Environment
 
+```bash
 cp .env.example .env
+```
 
-3. Sesuaikan Konfigurasi Database
+### 3. Sesuaikan Konfigurasi Database
 
+```bash
 Edit file .env dan sesuaikan dengan pengaturan database lokal Anda:
 
 DB_DATABASE=nama_database
 DB_USERNAME=root
 DB_PASSWORD=
+```
 
-4. Generate Application Key
+### 4. Generate Application Key
 
+```bash
 php artisan key:generate
+```
 
-5. Install Dependency
+### 5. Install Dependency
 
+```bash
 composer install
+```
 
-6. Jalankan Migrasi dan Seeder
+### 6. Jalankan Migrasi dan Seeder
 
+```bash
 php artisan migrate:fresh --seed
+```
 
-🔐 Akun Login Dummy
+### 🔐 Akun Login Dummy
+
 Akun Dosen
-
     Username: dosen1
-
     Password: dosen1
 
 Akun Mahasiswa
-
     Username: mahasiswa1
-
     Password: mahasiswa1
 
 🛠 Teknologi yang Digunakan
-
     Laravel
-
     Bootstrap
-
     MySQL/MariaDB
-
     Blade (Laravel View Engine)
